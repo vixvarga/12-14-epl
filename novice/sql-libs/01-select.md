@@ -6,18 +6,7 @@ root: ../..
 ## Selecting Data
 
 
-In the late 1920s and early 1930s,
-William Dyer,
-Frank Pabodie,
-and Valentina Roerich led expeditions to the
-[Pole of Inaccessibility](http://en.wikipedia.org/wiki/Pole_of_inaccessibility)
-in the South Pacific,
-and then onward to Antarctica.
-Two years ago,
-their expeditions were found in a storage locker at Miskatonic University.
-We have scanned and OCR'd the data they contain,
-and we now want to store that information
-in a way that will make search and analysis easy.
+A new library branch (The Meadows) opened in the city. Library planners made some educated guesses about which neighbourhoods would use this new location. However, now that the branch is open, the library administrators want to test their guesses and see if the customers who are using the library match the postal codes assigned to this catchement to ensure that staffing levels are appropriate. They want to use the circulation data from this branch to check trends in usage.
 
 We basically have three options:
 text files,
@@ -91,7 +80,7 @@ The tables below show the database we will use in our examples:
   <tr> <td>LON</td> <td>Londonderry</td> <td>110 Londonderry Mall, 137 Avenue 66 Street</td> </tr>
 </table>
 
-<strong>Postal codes</strong>: locations where readings were taken.
+<strong>Catchements</strong>: postal codes that correspond to library catchement areas.
 
 <table>
   <tr> <th>name</th> <th>lat</th> <th>long</th> </tr>
@@ -100,22 +89,22 @@ The tables below show the database we will use in our examples:
   <tr> <td>MSK-4</td> <td>-48.87</td> <td>-123.4</td> </tr>
 </table>
 
-<strong>Visited</strong>: when readings were taken at specific sites.
+<strong>Customers</strong>: Identities of customers.
 
 <table>
-  <tr> <th>ident</th> <th>site</th> <th>dated</th> </tr>
-  <tr> <td>619</td> <td>DR-1</td> <td>1927-02-08</td> </tr>
-  <tr> <td>622</td> <td>DR-1</td> <td>1927-02-10</td> </tr>
-  <tr> <td>734</td> <td>DR-3</td> <td>1939-01-07</td> </tr>
-  <tr> <td>735</td> <td>DR-3</td> <td>1930-01-12</td> </tr>
-  <tr> <td>751</td> <td>DR-3</td> <td>1930-02-26</td> </tr>
-  <tr> <td>752</td> <td>DR-3</td> <td bgcolor="red">&nbsp;</td> </tr>
-  <tr> <td>837</td> <td>MSK-4</td> <td>1932-01-14</td> </tr>
-  <tr> <td>844</td> <td>DR-1</td> <td>1932-03-22</td> </tr>
+  <tr> <th>Card number</th> <th>Last name</th><th>First name</th> <th>Address</th><th>Postal code</th>  </tr>
+  <tr> <td>212210152</td> <td>Simpson</td><td>Homer</td> <td>1927-02-08</td> </tr>
+  <tr> <td>212210384</td> <td>Stinson</td><td>Barney</td> <td>1927-02-10</td> </tr>
+  <tr> <td>212210235</td> <td>Ludgate</td><td>April</td> <td>1939-01-07</td> </tr>
+  <tr> <td>212210918</td> <td>Kelly</td><td>Charlie</td> <td>1930-01-12</td> </tr>
+  <tr> <td>212210824</td> <td></td><td></td> <td>1930-02-26</td> </tr>
+  <tr> <td>212210661</td> <td></td><td></td> <td bgcolor="red">&nbsp;</td> </tr>
+  <tr> <td>212210938</td> <td></td><td></td> <td>1932-01-14</td> </tr>
+  <tr> <td>212210444</td> <td></td><td></td> <td>1932-03-22</td> </tr>
 </table>
 </td>
 <td valign="top">
-<strong>Survey</strong>: the actual readings.
+<strong>Circulation</strong>: the borrowing patterns of users.
 
 <table>
   <tr> <th>taken</th> <th>person</th> <th>quant</th> <th>reading</th> </tr>
