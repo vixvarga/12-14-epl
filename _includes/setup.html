@@ -2,19 +2,6 @@
 
 <div class="row-fluid">
   <div class="span6">
-    <h4>Editor</h4>
-    <p>
-      When you're writing code, it's nice to have a text
-      editor that is optimized for writing code, with features
-      like automatic color-coding of key words.
-      The default text editor on Mac OS X and Linux is usually set to Vim,
-      which is not famous for being intuitive.
-      if you accidentally find yourself stuck in it,
-      try typing the escape key,
-      followed by ':q!' (colon, lower-case 'q', exclamation mark),
-      then hitting Return
-      to return to the shell.
-    </p>
 {% if page.lessons contains 'Bash' %}
     <h4>The Bash Shell</h4>
     <p>
@@ -147,14 +134,7 @@
       to keep Terminal in your dock for this workshop.
     </p>
 {% endif %}
-    <h4>Editor</h4>
-    <p>
-      We recommend
-      <a href="http://www.barebones.com/products/textwrangler/">Text Wrangler</a> or
-      <a href="http://www.sublimetext.com/">Sublime Text</a>.
-      In a pinch, you can use <code>nano</code>,
-      which should be pre-installed.
-    </p>
+
 {% if page.lessons contains 'Git' %}
     <h4>Git</h4>
     <p>
@@ -173,18 +153,7 @@
     <h4>Python</h4>
     <ul>
       <li>
-        Download and install  <a href="https://store.continuum.io/cshop/anaconda/">Anaconda</a>.
-      </li>
-      <li>
-        Use all of the defaults for installation
-        <em>except</em>
-        make sure to check <strong>Make Anaconda the default Python</strong>.
-      </li>
-      <li>
-	<strong>Troubleshooting:</strong> If you get the following error message
-	"<code>ValueError unknown locale: UTF-8</code>", see instructions on how
-	to fix it
-	<a href="http://conda.pydata.org/docs/troubleshooting.html#issue-valueerror-unknown-locale-utf-8-on-mac-os-x">here</a>.
+        Download and install  <a href="http://www.wingware.com/downloads/wingide-101/5.0.9-1/binaries&os=macos">Wing 101</a>.
       </li>
     </ul>
 {% endif %}
@@ -231,11 +200,7 @@
     </p>
 {% endif %}
     <h4>Editor</h4>
-    <p>
-      <a href="http://kate-editor.org/">Kate</a> is one option for Linux users.
-      In a pinch, you can use <code>nano</code>,
-      which should be pre-installed.
-    </p>
+
 {% if page.lessons contains 'R' %}
     <h4>R</h4>
     <p>
@@ -260,38 +225,9 @@
 {% if page.lessons contains 'Python' %}
     <h4>Python</h4>
     <p>
-      We recommend the all-in-one scientific Python installer
-      <a href="http://continuum.io/downloads.html">Anaconda</a>.
-      (Installation requires using the shell and if you aren't
-      comfortable doing the installation yourself just
-      download the installer and we'll help you at the boot
-      camp.)
+Download <a href="http://www.wingware.com/downloads/wingide-101/5.0.9-1/binaries&os=linux32">Wing 101</a>
     </p>
-    <ol>
-      <li>
-        Download the installer that matches your operating
-        system and save it in your home folder.
-      </li>
-      <li>
-        Open a terminal window.
-      </li>
-      <li>
-        Type <pre>bash Anaconda-</pre> and then press
-        tab. The name of the file you just downloaded should
-        appear.
-      </li>
-      <li>
-        Press enter. You will follow the text-only
-        prompts. When there is a colon at the bottom of the
-        screen press the down arrow to move down through the
-        text. Type <code>yes</code> and press enter to approve
-        the license. Press enter to approve the default
-        location for the files. Type <code>yes</code> and
-        press enter to prepend Anaconda to
-        your <code>PATH</code> (this makes the Anaconda
-        distribution the default Python).
-      </li>
-    </ol>
+
 {% endif %}
   </div>
 </div>
