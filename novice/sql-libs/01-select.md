@@ -68,7 +68,7 @@ The tables below show the database we will use in our examples:
 
 <table>
 <tr>
-<td valign="top" width=>
+<td valign="top">
 <strong>Branches</strong>: library locations within the city
 
 <table>
@@ -109,7 +109,7 @@ The tables below show the database we will use in our examples:
 <tr><td>212210235</td><td>Ludgate</td><td>April</td><td>5810 19a Ave Nw</td><td>T6L 1T1</td></tr>
 <tr><td>212210918</td><td>Kelly</td><td>Charlie</td><td>3208 134 AV</td><td>T5A 5E4</td></tr>
 <tr><td>212210824</td><td>Vonnegut</td><td>Kurt</td><td>12282 55 St</td><td>T5W 3R4</td></tr>
-<tr><td>212210661</td><td>Miller</td><td>Avril</td><td>		</td><td>T6E 5T6</td></tr>
+<tr><td>212210661</td><td>Miller</td><td>Avril</td><td bgcolor="red">		</td><td>T6E 5T6</td></tr>
 <tr><td>212210938</td><td>Kent</td><td>Clark</td><td>12007 46 St Nw</td><td>T5W 2W1</td></tr>
 <tr><td>212210444</td><td>Atwood</td><td>Maggie</td><td>5724 19 A avenue</td><td>T6L 1L8</td></tr>
 
