@@ -176,14 +176,18 @@ Our query and its output look like this:
 
 
 <pre class="in"><code>%%sqlite survey.db
-select last, first from customers;</code></pre>
+select last, first from Customers;</code></pre>
 
 <div class="out"><table>
-<tr><td>Dyer</td><td>William</td></tr>
-<tr><td>Pabodie</td><td>Frank</td></tr>
-<tr><td>Lake</td><td>Anderson</td></tr>
-<tr><td>Roerich</td><td>Valentina</td></tr>
-<tr><td>Danforth</td><td>Frank</td></tr>
+<tr><td>Simpson</td><td>Homer</td></tr>
+<tr><td>Stinson</td><td>Barney</td></tr>
+<tr><td>Ludgate</td><td>April</td></tr>
+<tr><td>Kelly</td><td>Charlie</td></tr>
+<tr><td>Vonnegut</td><td>Kurt</td></tr>
+<tr><td>Miller</td><td>Avril</td></tr>
+<tr><td>Kent</td><td>Clark</td></tr>
+<tr><td>Atwood</td><td>Maggie</td></tr>
+
 </table></div>
 
 
@@ -197,14 +201,17 @@ SQL is [case insensitive](../../gloss.html#case-insensitive).
 
 
 <pre class="in"><code>%%sqlite survey.db
-SeLeCt FaMiLy, PeRsOnAl FrOm PeRsOn;</code></pre>
+SeLeCt LaST, FiRsT FrOm CusToMerS;</code></pre>
 
 <div class="out"><table>
-<tr><td>Dyer</td><td>William</td></tr>
-<tr><td>Pabodie</td><td>Frank</td></tr>
-<tr><td>Lake</td><td>Anderson</td></tr>
-<tr><td>Roerich</td><td>Valentina</td></tr>
-<tr><td>Danforth</td><td>Frank</td></tr>
+<tr><td>Simpson</td><td>Homer</td></tr>
+<tr><td>Stinson</td><td>Barney</td></tr>
+<tr><td>Ludgate</td><td>April</td></tr>
+<tr><td>Kelly</td><td>Charlie</td></tr>
+<tr><td>Vonnegut</td><td>Kurt</td></tr>
+<tr><td>Miller</td><td>Avril</td></tr>
+<tr><td>Kent</td><td>Clark</td></tr>
+<tr><td>Atwood</td><td>Maggie</td></tr>
 </table></div>
 
 
@@ -222,15 +229,19 @@ For example,
 we could swap the columns in the output by writing our query as:
 
 
-<pre class="in"><code>%%sqlite survey.db
-select personal, family from Person;</code></pre>
+<pre class="in"><code>
+select first, last from customer;</code></pre>
 
 <div class="out"><table>
-<tr><td>William</td><td>Dyer</td></tr>
-<tr><td>Frank</td><td>Pabodie</td></tr>
-<tr><td>Anderson</td><td>Lake</td></tr>
-<tr><td>Valentina</td><td>Roerich</td></tr>
-<tr><td>Frank</td><td>Danforth</td></tr>
+<tr><td>Homer</td><td>Simpson</td></tr>
+<tr><td>Barney</td><td>Stinson</td></tr>
+<tr><td>April</td><td>Ludgate</td></tr>
+<tr><td>Charlie</td><td>Kelly</td></tr>
+<tr><td>Kurt</td><td>Vonnegut</td></tr>
+<tr><td>Avril</td><td>Miller</td></tr>
+<tr><td>Clark</td><td>Kent</td></tr>
+<tr><td>Maggie</td><td>Atwood</td></tr>
+
 </table></div>
 
 
@@ -238,14 +249,18 @@ or even repeat columns:
 
 
 <pre class="in"><code>%%sqlite survey.db
-select ident, ident, ident from Person;</code></pre>
+select first, first, first from Customer;</code></pre>
 
 <div class="out"><table>
-<tr><td>dyer</td><td>dyer</td><td>dyer</td></tr>
-<tr><td>pb</td><td>pb</td><td>pb</td></tr>
-<tr><td>lake</td><td>lake</td><td>lake</td></tr>
-<tr><td>roe</td><td>roe</td><td>roe</td></tr>
-<tr><td>danforth</td><td>danforth</td><td>danforth</td></tr>
+<tr><td>Homer</td><td>Homer</td><td>Homer</td></tr>
+<tr><td>Barney</td><td>Barney</td><td>Barney</td></tr>
+<tr><td>April</td><td>April</td><td>April</td></tr>
+<tr><td>Charlie</td><td>Charlie</td><td>Charlie</td></tr>
+<tr><td>Kurt</td><td>Kurt</td><td>Kurt</td></tr>
+<tr><td>Avril</td><td>Avril</td><td>Avril</td></tr>
+<tr><td>Clark</td><td>Clark</td><td>Clark</td></tr>
+<tr><td>Maggie</td><td>Maggie</td><td>Maggie</td></tr>
+
 </table></div>
 
 
@@ -253,32 +268,36 @@ As a shortcut,
 we can select all of the columns in a table using `*`:
 
 
-<pre class="in"><code>%%sqlite survey.db
-select * from Person;</code></pre>
+<pre class="in"><code>
+select * from Customer;</code></pre>
 
 <div class="out"><table>
-<tr><td>dyer</td><td>William</td><td>Dyer</td></tr>
-<tr><td>pb</td><td>Frank</td><td>Pabodie</td></tr>
-<tr><td>lake</td><td>Anderson</td><td>Lake</td></tr>
-<tr><td>roe</td><td>Valentina</td><td>Roerich</td></tr>
-<tr><td>danforth</td><td>Frank</td><td>Danforth</td></tr>
+<tr><td>212210152</td><td>Simpson</td><td>Homer</td><td>10439 16 Avenue</td><td>T6X 5T1</td></tr>
+<tr><td>3210384</td><td>Stinson</td><td>Barney</td><td>4062 33A ST</td><td>T6T 1R4</td></tr>
+<tr><td>212210235</td><td>Ludgate</td><td>April</td><td>5810 19a Ave Nw</td><td>T6L 1T1</td></tr>
+<tr><td>212210918</td><td>Kelly</td><td>Charlie</td><td>3208 134 AV</td><td>T5A 5E4</td></tr>
+<tr><td>212210824</td><td>Vonnegut</td><td>Kurt</td><td>12282 55 St</td><td>T5W 3R4</td></tr>
+<tr><td>212210661</td><td>Miller</td><td>Avril</td><td></td><td>T6E 5T6</td></tr>
+<tr><td>212210938</td><td>Kent</td><td>Clark</td><td>12007 46 St Nw</td><td>T5W 2W1</td></tr>
+<tr><td>212210444</td><td>Atwood</td><td>Maggie</td><td>5724 19 A avenue</td><td>T6L 1L8</td></tr>
+
 </table></div>
 
 
 #### Challenges
 
-1.  Write a query that selects only site names from the `Site` table.
+1.  Write a query that selects only names from the `branches` table.
 
 2.  Many people format queries as:
 
     ~~~
-    SELECT personal, family FROM person;
+    SELECT first, last FROM customers;
     ~~~
 
     or as:
 
     ~~~
-    select Personal, Family from PERSON;
+    select First, Last from CUSTOMERS;
     ~~~
 
     What style do you find easiest to read, and why?
