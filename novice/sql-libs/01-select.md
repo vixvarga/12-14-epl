@@ -68,7 +68,7 @@ The tables below show the database we will use in our examples:
 
 <table>
 <tr>
-<td valign="top">
+<td valign="top" width=>
 <strong>Branches</strong>: library locations within the city
 
 <table>
@@ -79,7 +79,7 @@ The tables below show the database we will use in our examples:
   <tr> <td>IDY</td> <td>Idylwylde</td> <td>8310 88 Avenue</td> </tr>
   <tr> <td>LON</td> <td>Londonderry</td> <td>110 Londonderry Mall, 137 Avenue 66 Street</td> </tr>
 </table>
-
+<br/>
 <strong>Catchements</strong>: postal codes that correspond to library catchement areas.
 
 <table>
@@ -99,7 +99,7 @@ The tables below show the database we will use in our examples:
 <tr><td>mea</td> <td>t6t</td></tr>
 
 </table>
-
+<br/>
 <strong>Customers</strong>: Identities of customers.
 
 <table>
@@ -111,7 +111,7 @@ The tables below show the database we will use in our examples:
 <tr><td>212210824</td><td>Vonnegut</td><td>Kurt</td><td>12282 55 St</td><td>T5W 3R4</td></tr>
 <tr><td>212210661</td><td>Miller</td><td>Avril</td><td>		</td><td>T6E 5T6</td></tr>
 <tr><td>212210938</td><td>Kent</td><td>Clark</td><td>12007 46 St Nw</td><td>T5W 2W1</td></tr>
-<tr><td>212210444</td><td>Atwood</td><td>Maggie	5724 19 A avenue</td><td>T6L 1L8</td></tr>
+<tr><td>212210444</td><td>Atwood</td><td>Maggie</td><td>5724 19 A avenue</td><td>T6L 1L8</td></tr>
 
 </table>
 </td>
