@@ -159,7 +159,7 @@ The tables below show the database we will use in our examples:
 </td>
 </tr>
 </table>
-
+<br/>
 
 Notice that two entries in the `customers` table,
 are shown in red
