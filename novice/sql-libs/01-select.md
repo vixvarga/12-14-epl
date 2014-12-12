@@ -83,64 +83,90 @@ The tables below show the database we will use in our examples:
 <strong>Catchements</strong>: postal codes that correspond to library catchement areas.
 
 <table>
-  <tr> <th>name</th> <th>lat</th> <th>long</th> </tr>
-  <tr> <td>DR-1</td> <td>-49.85</td> <td>-128.57</td> </tr>
-  <tr> <td>DR-3</td> <td>-47.15</td> <td>-126.72</td> </tr>
-  <tr> <td>MSK-4</td> <td>-48.87</td> <td>-123.4</td> </tr>
+  <tr> <th>Identity</th> <th>Postal code</th> </tr>
+<tr><td>LON</td> <td>T5A</td></tr>
+<tr><td>LON</td> <td>T5W</td></tr>
+<tr><td>LON</td> <td>T5B</td></tr>
+<tr><td>LON</td> <td>T5C</td></tr>
+<tr><td>IDY</td> <td>T6C</td></tr>
+<tr><td>IDY</td> <td>T6E</td></tr>
+<tr><td>CPL</td> <td>T6B</td></tr>
+<tr><td>CPL</td> <td>T6P</td></tr>
+<tr><td>MLW</td> <td>T6N</td></tr>
+<tr><td>MLW</td> <td>T6K</td></tr>
+<tr><td>MEA</td> <td>T6L</td></tr>
+<tr><td>MEA</td> <td>t6x</td></tr>
+<tr><td>mea</td> <td>t6t</td></tr>
+
 </table>
 
 <strong>Customers</strong>: Identities of customers.
 
 <table>
   <tr> <th>Card number</th> <th>Last name</th><th>First name</th> <th>Address</th><th>Postal code</th>  </tr>
-  <tr> <td>212210152</td> <td>Simpson</td><td>Homer</td> <td>1927-02-08</td> </tr>
-  <tr> <td>212210384</td> <td>Stinson</td><td>Barney</td> <td>1927-02-10</td> </tr>
-  <tr> <td>212210235</td> <td>Ludgate</td><td>April</td> <td>1939-01-07</td> </tr>
-  <tr> <td>212210918</td> <td>Kelly</td><td>Charlie</td> <td>1930-01-12</td> </tr>
-  <tr> <td>212210824</td> <td></td><td></td> <td>1930-02-26</td> </tr>
-  <tr> <td>212210661</td> <td></td><td></td> <td bgcolor="red">&nbsp;</td> </tr>
-  <tr> <td>212210938</td> <td></td><td></td> <td>1932-01-14</td> </tr>
-  <tr> <td>212210444</td> <td></td><td></td> <td>1932-03-22</td> </tr>
+<tr><td>212210152</td><td>Simpson</td><td>Homer</td><td>10439 16 Avenue</td><td>T6X 5T1</td></tr>
+<tr><td>3210384</td><td>Stinson</td><td>Barney</td><td>4062 33A ST</td><td>T6T 1R4</td></tr>
+<tr><td>212210235</td><td>Ludgate</td><td>April</td><td>5810 19a Ave Nw</td><td>T6L 1T1</td></tr>
+<tr><td>212210918</td><td>Kelly</td><td>Charlie</td><td>3208 134 AV</td><td>T5A 5E4</td></tr>
+<tr><td>212210824</td><td>Vonnegut</td><td>Kurt</td><td>12282 55 St</td><td>T5W 3R4</td></tr>
+<tr><td>212210661</td><td>Miller</td><td>Avril</td><td>		</td><td>T6E 5T6</td></tr>
+<tr><td>212210938</td><td>Kent</td><td>Clark</td><td>12007 46 St Nw</td><td>T5W 2W1</td></tr>
+<tr><td>212210444</td><td>Atwood</td><td>Maggie	5724 19 A avenue</td><td>T6L 1L8</td></tr>
+
 </table>
 </td>
 <td valign="top">
 <strong>Circulation</strong>: the borrowing patterns of users.
 
 <table>
-  <tr> <th>taken</th> <th>person</th> <th>quant</th> <th>reading</th> </tr>
-  <tr> <td>619</td> <td>dyer</td> <td>rad</td> <td>9.82</td> </tr>
-  <tr> <td>619</td> <td>dyer</td> <td>sal</td> <td>0.13</td> </tr>
-  <tr> <td>622</td> <td>dyer</td> <td>rad</td> <td>7.8</td> </tr>
-  <tr> <td>622</td> <td>dyer</td> <td>sal</td> <td>0.09</td> </tr>
-  <tr> <td>734</td> <td>pb</td> <td>rad</td> <td>8.41</td> </tr>
-  <tr> <td>734</td> <td>lake</td> <td>sal</td> <td>0.05</td> </tr>
-  <tr> <td>734</td> <td>pb</td> <td>temp</td> <td>-21.5</td> </tr>
-  <tr> <td>735</td> <td>pb</td> <td>rad</td> <td>7.22</td> </tr>
-  <tr> <td>735</td> <td bgcolor="red">&nbsp;</td> <td>sal</td> <td>0.06</td> </tr>
-  <tr> <td>735</td> <td bgcolor="red">&nbsp;</td> <td>temp</td> <td>-26.0</td> </tr>
-  <tr> <td>751</td> <td>pb</td> <td>rad</td> <td>4.35</td> </tr>
-  <tr> <td>751</td> <td>pb</td> <td>temp</td> <td>-18.5</td> </tr>
-  <tr> <td>751</td> <td>lake</td> <td>sal</td> <td>0.1</td> </tr>
-  <tr> <td>752</td> <td>lake</td> <td>rad</td> <td>2.19</td> </tr>
-  <tr> <td>752</td> <td>lake</td> <td>sal</td> <td>0.09</td> </tr>
-  <tr> <td>752</td> <td>lake</td> <td>temp</td> <td>-16.0</td> </tr>
-  <tr> <td>752</td> <td>roe</td> <td>sal</td> <td>41.6</td> </tr>
-  <tr> <td>837</td> <td>lake</td> <td>rad</td> <td>1.46</td> </tr>
-  <tr> <td>837</td> <td>lake</td> <td>sal</td> <td>0.21</td> </tr>
-  <tr> <td>837</td> <td>roe</td> <td>sal</td> <td>22.5</td> </tr>
-  <tr> <td>844</td> <td>roe</td> <td>rad</td> <td>11.25</td> </tr>
+  <tr> <th>Card number</th> <th>Date</th>  <th>Title</th> </tr>
+<tr><td>212210235</td><td>11/27/2014</td><td>A Brief History of Time</td></tr>
+<tr><td>212210152</td><td>11/28/2014</td><td>The Corrections</td></tr>
+<tr><td>3210384</td><td>11/28/2014</td><td>The Eyre Affair</td></tr>
+<tr><td>212210661</td><td>11/27/2014</td><td>The New York Trilogy</td></tr>
+<tr><td>212210152</td><td>11/29/2014</td><td>Men at Arms</td></tr>
+<tr><td>3210384</td><td>11/27/2014</td><td>A Prayer for Owen Meany</td></tr>
+<tr><td>212210824</td><td>11/29/2014</td><td>A Wrinkle in Time</td></tr>
+<tr><td>212210918</td><td>11/29/2014</td><td>House of Leaves</td></tr>
+<tr><td>212210938</td><td>11/30/2014</td><td>Italian Folktales</td></tr>
+<tr><td>3210384</td><td>11/30/2014</td><td>Ficcones</td></tr>
+<tr><td>212210938</td><td>11/27/2014</td><td>Everything is Illuminated</td></tr>
+<tr><td>212210661</td><td>11/30/2014</td><td>Galatea 2.2</td></tr>
+<tr><td>3210384</td><td>11/30/2014</td><td>Gravity's Rainbow</td></tr>
+<tr><td>212210661</td><td>11/28/2014</td><td>Game of Thrones</td></tr>
+<tr><td>212210661</td><td>12/1/2014</td><td>First Among Sequels</td></tr>
+<tr><td>212210444</td><td>11/27/2014</td><td>Year of the Flood</td></tr>
+<tr><td>212210235</td><td>12/1/2014</td><td>Foundation</td></tr>
+<tr><td>212210235</td><td>11/30/2014</td><td>Ancillary Justice</td></tr>
+<tr><td>212210938</td><td>12/1/2014</td><td>Where the Red Ferns Grow</td></tr>
+<tr><td>212210938</td><td>11/27/2014</td><td>Pride and Prejudice</td></tr>
+<tr><td>212210444</td><td>12/1/2014</td><td>Slaughterhouse Five</td></tr>
+<tr><td>212210235</td><td>11/28/2014</td><td>Men at Arms</td></tr>
+<tr><td>3210384</td><td>11/30/2014</td><td>Gravity's Rainbow</td></tr>
+<tr><td>3210384</td><td>11/27/2014</td><td>Men at Arms</td></tr>
+<tr><td>212210444</td><td>11/30/2014</td><td>Men at Arms</td></tr>
+<tr><td>212210444</td><td>11/30/2014</td><td>Gravity's Rainbow</td></tr>
+<tr><td>3210384</td><td>11/30/2014</td><td>Men at Arms</td></tr>
+<tr><td>212210235</td><td>12/1/2014</td><td>Italian Folktales</td></tr>
+<tr><td>212210938</td><td>11/28/2014</td><td>A Prayer for Owen Meany</td></tr>
+<tr><td>3210384</td><td>11/27/2014</td><td>Year of the Flood</td></tr>
+<tr><td>212210938</td><td>11/30/2014</td><td>A Prayer for Owen Meany</td></tr>
+<tr><td>3210384</td><td>11/28/2014</td><td>Italian Folktales</td></tr>
+<tr><td>212210938</td><td>11/30/2014</td><td>Italian Folktales</td></tr>
+<tr><td>212210444</td><td>12/1/2014</td><td>Italian Folktales</td></tr>
+
 </table>
 </td>
 </tr>
 </table>
 
 
-Notice that three entries&mdash;one in the `Visited` table,
-and two in the `Survey` table&mdash;are shown in red
+Notice that two entries in the `customers` table,
+are shown in red
 because they don't contain any actual data:
 we'll return to these missing values [later](#s:null).
 For now,
-let's write an SQL query that displays scientists' names.
+let's write an SQL query that displays customers' names.
 We do this using the SQL command `select`,
 giving it the names of the columns we want and the table we want them from.
 Our query and its output look like this:
@@ -150,7 +176,7 @@ Our query and its output look like this:
 
 
 <pre class="in"><code>%%sqlite survey.db
-select family, personal from Person;</code></pre>
+select last, first from customers;</code></pre>
 
 <div class="out"><table>
 <tr><td>Dyer</td><td>William</td></tr>

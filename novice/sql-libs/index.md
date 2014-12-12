@@ -21,7 +21,7 @@ behave the way we do,
 and why they insist on structuring data in certain ways.
 
 <div class="toc" markdown="1">
-
+0.  [Setup](00-setup.html)
 1.  [Selecting Data](01-select.html)
 2.  [Sorting and Removing Duplicates](02-sort-dup.html)
 3.  [Filtering](03-filter.html)
