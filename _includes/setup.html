@@ -56,6 +56,29 @@
 
 <div class="row-fluid">
   <div class="span6">
+  {% if page.lessons contains 'Git' %}
+    <h4>Git Bash</h4>
+    <p>
+      Install Git for Windows by download and running
+      <a href="http://msysgit.github.io/">the installer</a>.
+      This will provide you with both Git and Bash in the Git Bash program.
+    </p>
+    <h4>Software Carpentry Installer</h4>
+    <p>This installer requires an active internet connection</p>
+    <p>After installing Python and Git Bash:</p>
+    <ul>
+      <li>
+        Download the <a href="{{site.windows_installer_path}}">installer</a>.
+      </li>
+      <li>
+        If the file opens directly in the browser select <strong>File&rarr;Save Page As</strong>
+        to download it to your computer.
+      </li>
+      <li>
+        Double click on the file to run it.
+      </li>
+    </ul>
+{% endif %}
   {% if page.lessons contains 'Python' %}
     <h4>Python</h4>
     <ul>
@@ -70,12 +93,7 @@
     </ul>
 {% endif %}
 
-    <h4>Editor</h4>
-    <ul>
-      <li>
-        Download and install  <a href="http://www.wingware.com/downloads/wingide-101">Wing 101</a>.
-      </li>
-    </ul>
+ 
 
 {% if page.lessons contains 'Git' %}
     <h4>Git Bash</h4>
@@ -112,6 +130,12 @@
       <a href="http://www.rstudio.com/ide/download/desktop">RStudio IDE</a>.
     </p>
 {% endif %}
+   <h4>Editor</h4>
+    <ul>
+      <li>
+        Download and install  <a href="http://www.wingware.com/downloads/wingide-101">Wing 101</a>.
+      </li>
+    </ul>
 {% if page.lessons contains 'SQL' %}
     <h4>SQLite</h4>
     <p>
@@ -151,9 +175,7 @@
       installer for 10.6-10.7.
     </p>
 {% endif %}
-  </div>
-  <div class="span6">
-  {% if page.lessons contains 'Python' %}
+{% if page.lessons contains 'Python' %}
     <h4>Python</h4>
     <ul>
       <li>
@@ -172,6 +194,9 @@
       </li>
     </ul>
 {% endif %}
+  </div>
+  <div class="span6">
+  
 
     <h4>Editor</h4>
     <ul>
@@ -243,6 +268,11 @@
       you may install the Firefox SQLite browser plugin described <a href="#firefox-sqlite">below</a>.
     </p>
 {% endif %}
+    <h4>Editor</h4>
+    <p>
+Download <a href="http://www.wingware.com/downloads/wingide-101/5.0.9-1/binaries&os=linux32">Wing 101</a>
+    </p>
+
   </div>
   <div class="span6">
   
@@ -283,10 +313,6 @@
       </li>
     </ol>
 {% endif %}
-    <h4>Editor</h4>
-    <p>
-Download <a href="http://www.wingware.com/downloads/wingide-101/5.0.9-1/binaries&os=linux32">Wing 101</a>
-    </p>
 
 
   </div>
