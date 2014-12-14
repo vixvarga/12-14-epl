@@ -6,167 +6,209 @@ root: ../..
 ## Calculating New Values
 
 
-<div class="objectives" markdown="1">
-#### Objectives
-
-*   Write queries that calculate new values for each selected record.
+<div class="objectives">
+<h4 id="objectives">Objectives</h4>
+<ul>
+<li>Write queries that calculate new values for each selected record.</li>
+</ul>
 </div>
 
 
-After carefully re-reading the expedition logs,
-we realize that the radiation measurements they report
-may need to be corrected upward by 5%.
-Rather than modifying the stored data,
-we can do this calculation on the fly
-as part of our query:
+<div>
+<p>The library is embarking on a digitization project. In order to estimate how long it would take to scan books, you want to look up what the total number of pages for all library books are. Prior experience has shown that due to poor quality binding, up to 2% of the pages will fail to be scanned for books published by Wiley and will have to be scanned anew. The total number of pages has therefore to be adjusted accordingly for this publisher:</p>
+</div>
 
 
-<pre class="in"><code>%load_ext sqlitemagic</code></pre>
+<div class="in">
+<pre>%load_ext sqlitemagic</pre>
+</div>
+
+<div class="in">
+<pre>%%sqlite swclib.db
+SELECT 1.02*Pages FROM Works WHERE Publisher = "Wiley"</pre>
+</div>
+
+<div class="out">
+<pre><table>
+	<TR><TD bgcolor="red">&nbsp;</TD>
+	</TR>
+	<TR><TD>408.0</TD>
+	</TR>
+	<TR><TD>874.14</TD>
+	</TR>
+	<TR><TD>448.8</TD>
+	</TR>
+	<TR><TD>511.02</TD>
+	</TR>
+	<TR><TD>722.16</TD>
+	</TR>
+	<TR><TD>775.2</TD>
+	</TR>
+</table></pre>
+</div>
+
+<div>Remember those empty cells we had in the database? Seems like one of them is showing up again here. We'll have to deal with it later so that it doesn't mess up our computations.</div>
+
+<div>
+<p>When we run the query, the expression <code>1.02 * Pages</code> is evaluated for each row. Expressions can use any of the fields, all of usual arithmetic operators, and a variety of common functions. (Exactly which ones depends on which database manager is being used.) For example, knowing that scanning two pages takes exactly 13 seconds, we can compute how many hours would be necessary to scan each Wiley book. Since this is an estimate, more than one decimal place doesn't make much sense and so we use a rounding function:</p>
+</div>
 
 
-<pre class="in"><code>%%sqlite survey.db
-select 1.05 * reading from Survey where quant=&#39;rad&#39;;</code></pre>
+<div class="in">
+<pre>%%sqlite swclib.db
+SELECT Title, round(13/2*(1.02*Pages)/3600,1) FROM Works WHERE Publisher = "Wiley"</pre>
+</div>
 
-<div class="out"><table>
-<tr><td>10.311</td></tr>
-<tr><td>8.19</td></tr>
-<tr><td>8.8305</td></tr>
-<tr><td>7.581</td></tr>
-<tr><td>4.5675</td></tr>
-<tr><td>2.2995</td></tr>
-<tr><td>1.533</td></tr>
-<tr><td>11.8125</td></tr>
-</table></div>
-
-
-When we run the query,
-the expression `1.05 * reading` is evaluated for each row.
-Expressions can use any of the fields,
-all of usual arithmetic operators,
-and a variety of common functions.
-(Exactly which ones depends on which database manager is being used.)
-For example,
-we can convert temperature readings from Fahrenheit to Celsius
-and round to two decimal places:
-
-
-<pre class="in"><code>%%sqlite survey.db
-select taken, round(5*(reading-32)/9, 2) from Survey where quant=&#39;temp&#39;;</code></pre>
-
-<div class="out"><table>
-<tr><td>734</td><td>-29.72</td></tr>
-<tr><td>735</td><td>-32.22</td></tr>
-<tr><td>751</td><td>-28.06</td></tr>
-<tr><td>752</td><td>-26.67</td></tr>
-</table></div>
+<div class="out">
+<pre><table>
+	<TR><TD>SQL for dummies</TD>
+	<TD bgcolor="red"></TD>
+	</TR>
+	<TR><TD>Discovering SQL</TD>
+	<TD>0.7</TD>
+	</TR>
+	<TR><TD>SQL bible</TD>
+	<TD>1.5</TD>
+	</TR>
+	<TR><TD>SQL for dummies</TD>
+	<TD>0.7</TD>
+	</TR>
+	<TR><TD>Beginning SQL</TD>
+	<TD>0.9</TD>
+	</TR>
+	<TR><TD>SQL all-in-one</TD>
+	<TD>1.2</TD>
+	</TR>
+	<TR><TD>Access 2013 all-in-one</TD>
+	<TD>1.3</TD>
+	</TR>
+</table></pre>
+</div>
 
 
-We can also combine values from different fields,
-for example by using the string concatenation operator `||`:
+<div>
+<p>We can also combine values from different fields, for example by using the string concatenation operator <code>||</code>:</p>
+</div>
 
 
-<pre class="in"><code>%%sqlite survey.db
-select personal || &#39; &#39; || family from Person;</code></pre>
+<div class="in">
+<pre>%%sqlite swclib.db
+SELECT Personal || " " || Family FROM Authors LIMIT 5;</pre>
+</div>
 
-<div class="out"><table>
-<tr><td>William Dyer</td></tr>
-<tr><td>Frank Pabodie</td></tr>
-<tr><td>Anderson Lake</td></tr>
-<tr><td>Valentina Roerich</td></tr>
-<tr><td>Frank Danforth</td></tr>
-</table></div>
+<div class="out">
+<pre><table>
+	<TR><TD>Kevin E. Kline</TD>
+	</TR>
+	<TR><TD>Daniel Kline</TD>
+	</TR>
+	<TR><TD>Brand Hunt</TD>
+	</TR>
+	<TR><TD>Allen G. Taylor</TD>
+	</TR>
+	<TR><TD>Brett McLaughlin</TD>
+	</TR>
+</table></pre>
+</div>
+
+<div>
+<h4 id="challenges">Challenges</h4>
+<ol style="list-style-type: decimal">
+<li><p>After further testing, we realize that the average time to scan every two pages of books published by O'Reilly is 25 seconds, because the operator seems to like reading a few paragraphs now and then. Fortunately, they do not suffer from the binding issue, though. Write a query that returns the number of hours necessary to scan each O'Reilly book, given those circumstances.</p></li>
+<li><p>The <code>UNION</code> operator combines the results of two queries:</p></li>
+</ol>
+</div>
 
 
-> It may seem strange to use `personal` and `family` as field names
-> instead of `first` and `last`,
-> but it's a necessary first step toward handling cultural differences.
-> For example,
-> consider the following rules:
+<div class="in">
+<pre>%%sqlite swclib.db
+SELECT * FROM Works WHERE Publisher='Peachpit' UNION SELECT * FROM Works WHERE Publisher='Faber &amp; Faber';</pre>
+</div>
 
+<div class="out">
+<pre><table>
+	<TR><TD>5</TD>
+	<TD>Geek sublime</TD>
+	<TD>9780571310302</TD>
+	<TD>2014</TD>
+	<TD>London</TD>
+	<TD>Faber &amp; Faber</TD>
+	<TD></TD>
+	<TD>258</TD>
+	</TR>
+	<TR><TD>9</TD>
+	<TD>SQL</TD>
+	<TD>0321334175</TD>
+	<TD>2005</TD>
+	<TD>Berkeley</TD>
+	<TD>Peachpit</TD>
+	<TD>2nd ed.</TD>
+	<TD>460</TD>
+	</TR>
+</table></pre>
+</div>
+
+
+<div>
+<p>Use <code>UNION</code> to create a consolidated list of Wiley and O'Reilly titles, along with the estimated time it would take to digitize them according to the two formulas discussed above. The output should be something like:</p>
 <table>
-  <tr> <th>Full Name</th> <th>Alphabetized Under</th> <th>Reason</th> </tr>
-  <tr> <td>Liu Xiaobo</td> <td>Liu</td> <td>Chinese family names come first</td> </tr>
-  <tr> <td> Leonardo da Vinci</td> <td>Leonardo</td> <td>"da Vinci" just means "from Vinci"</td> </tr>
-  <tr> <td> Catherine de Medici</td> <td>Medici</td> <td>family name</td> </tr>
-  <tr> <td> Jean de La Fontaine</td> <td>La Fontaine</td> <td>family name is "La Fontaine"</td> </tr>
-  <tr> <td> Juan Ponce de Leon</td> <td>Ponce de Leon</td> <td>full family name is "Ponce de Leon"</td> </tr>
-  <tr> <td> Gabriel Garcia Marquez</td> <td>Garcia Marquez</td> <td>double-barrelled Spanish surnames</td> </tr>
-  <tr> <td> Wernher von Braun</td> <td>von <em>or</em> Braun</td> <td>depending on whether he was in Germany or the US</td> </tr>
-  <tr> <td> Elizabeth Alexandra May Windsor</td> <td>Elizabeth</td> <td>monarchs alphabetize by the name under which they reigned</td> </tr>
-  <tr> <td> Thomas a Beckett</td> <td>Thomas</td> <td>and saints according to the names by which they were canonized</td> </tr>
+	<TR><TD>Access 2013 all-in-one</TD>
+	<TD>1.3</TD>
+	</TR>
+	<TR><TD>Beginning SQL</TD>
+	<TD>0.9</TD>
+	</TR>
+	<TR><TD>Discovering SQL</TD>
+	<TD>0.7</TD>
+	</TR>
+	<TR><TD>Learning SQL</TD>
+	<TD>1.0</TD>
+	</TR>
+	<TR><TD>MySQL in a nutshell</TD>
+	<TD>1.0</TD>
+	</TR>
+	<TR><TD>PHP &amp; MySQL</TD>
+	<TD>1.0</TD>
+	</TR>
+	<TR><TD>SQL all-in-one</TD>
+	<TD>1.2</TD>
+	</TR>
+	<TR><TD>SQL bible</TD>
+	<TD>1.5</TD>
+	</TR>
+	<TR><TD>SQL for dummies</TD>
+	<TD></TD>
+	</TR>
+	<TR><TD>SQL for dummies</TD>
+	<TD>0.7</TD>
+	</TR>
+	<TR><TD>SQL in a nutshell</TD>
+	<TD>1.0</TD>
+	</TR>
+	<TR><TD>SQL in a nutshell</TD>
+	<TD>2.0</TD>
+	</TR>
+	<TR><TD>Using SQLite</TD>
+	<TD>1.0</TD>
+	</TR>
 </table>
 
-> Clearly,
-> even a two-part division into "personal" and "family"
-> isn't enough...
+
+</div>
 
 
-#### Challenges
-
-1.  After further reading,
-    we realize that Valentina Roerich
-    was reporting salinity as percentages.
-    Write a query that returns all of her salinity measurements
-    from the `Survey` table
-    with the values divided by 100.
-
-2.  The `union` operator combines the results of two queries:
+<div>
+<ol start="3" style="list-style-type: decimal">
+<li><p>The <code>Works</code> table contains <a href="https://en.wikipedia.org/wiki/ISBN">ISBN</a> numbers that are either in 10-digit or 13-digit format. The 13-digit numbers all start with the '978' prefix. The two digits following the prefix (or the first two digits in ISBN-10) form the &quot;registration group element&quot; (to simplify: language or country), the next four digits are the &quot;registrant element&quot; (publisher) and the next three are the &quot;publication element&quot; (title). The last digit in both formats is a checksum character.</p>
+<p><a href="https://commons.wikimedia.org/wiki/File:ISBN_Details.svg#mediaviewer/File:ISBN_Details.svg"><img src="https://upload.wikimedia.org/wikipedia/commons/8/84/ISBN_Details.svg" alt="ISBN Details.svg" height="480" width="312"></a><br>"<a href="https://commons.wikimedia.org/wiki/File:ISBN_Details.svg#mediaviewer/File:ISBN_Details.svg">ISBN Details</a>" by <a href="//en.wikipedia.org/wiki/User:Sakurambo" class="extiw" title="wikipedia:User:Sakurambo">Sakurambo</a> at <a href="//en.wikipedia.org/wiki/" class="extiw" title="wikipedia:">English Wikipedia</a> - Own work, based on <a href="//en.wikipedia.org/wiki/Image:ISBN_Details.jpg" class="extiw" title="en:Image:ISBN Details.jpg">en::Image:ISBN Details.jpg</a>. Licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a> via <a href="//commons.wikimedia.org/wiki/">Wikimedia Commons</a>.</p>
+<p>The substring function <code>substr(X, I, L)</code> returns the substring of X starting at index I and of length L (L is optional). The <code>length()</code> function can be used in a <code>WHERE</code> clause to test against the length of a field. Use these functions and the <code>UNION</code> statement to output a list of publishers and the 4-digit publisher codes (registrant elements) appearing in the <code>Works</code> table. The result should help dissolve whatever hope you still held on the usefulness of ISBNs for collection analysis...</p> 
+</li></ol>
+</div>
 
 
-<pre class="in"><code>%%sqlite survey.db
-select * from Person where ident=&#39;dyer&#39; union select * from Person where ident=&#39;roe&#39;;</code></pre>
-
-<div class="out"><table>
-<tr><td>dyer</td><td>William</td><td>Dyer</td></tr>
-<tr><td>roe</td><td>Valentina</td><td>Roerich</td></tr>
-</table></div>
-
-
-Use `union` to create a consolidated list of salinity measurements
-in which Roerich's, and only Roerich's,
-have been corrected as described in the previous challenge.
-The output should be something like:
-
-<table>
-  <tr> <td>619</td> <td>0.13</td> </tr>
-  <tr> <td>622</td> <td>0.09</td> </tr>
-  <tr> <td>734</td> <td>0.05</td> </tr>
-  <tr> <td>751</td> <td>0.1</td> </tr>
-  <tr> <td>752</td> <td>0.09</td> </tr>
-  <tr> <td>752</td> <td>0.416</td> </tr>
-  <tr> <td>837</td> <td>0.21</td> </tr>
-  <tr> <td>837</td> <td>0.225</td> </tr>
-</table>
-
-
-
-3.  The site identifiers in the `Visited` table have two parts
-    separated by a '-':
-
-
-<pre class="in"><code>%%sqlite survey.db
-select distinct site from Visited;</code></pre>
-
-<div class="out"><table>
-<tr><td>DR-1</td></tr>
-<tr><td>DR-3</td></tr>
-<tr><td>MSK-4</td></tr>
-</table></div>
-
-
-Some major site identifiers are two letters long and some are three.
-The "in string" function `instr(X, Y)`
-returns the 1-based index of the first occurrence of string Y in string X,
-or 0 if Y does not exist in X.
-The substring function `substr(X, I)`
-returns the substring of X starting at index I.
-Use these two functions to produce a list of unique major site identifiers.
-(For this data,
-the list should contain only "DR" and "MSK").
-
-
-<div class="keypoints" markdown="1">
-#### Key Points
-
-*   SQL can perform calculations using the values in a record as part of a query.
+<div class="keypoints">
+<h4 id="key-points">Key Points</h4>
+<ul>
+<li>SQL can perform calculations using the values in a record as part of a query.</li>
+</ul>
 </div>

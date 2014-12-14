@@ -1,7 +1,7 @@
 ---
 layout: lesson
 root: ../..
-title: Using Databases and SQL
+title: Using Databases and SQL - Librarians Edition
 ---
 Almost everyone has used spreadsheets,
 and almost everyone has eventually run up against their limitations.
@@ -21,7 +21,7 @@ behave the way we do,
 and why they insist on structuring data in certain ways.
 
 <div class="toc" markdown="1">
-0.  [Setup](00-setup.html)
+
 1.  [Selecting Data](01-select.html)
 2.  [Sorting and Removing Duplicates](02-sort-dup.html)
 3.  [Filtering](03-filter.html)
@@ -29,9 +29,7 @@ and why they insist on structuring data in certain ways.
 5.  [Missing Data](05-null.html)
 6.  [Aggregation](06-agg.html)
 7.  [Combining Data](07-join.html)
-8.  [Creating and Modifying Data](08-create.html)
-9.  [Programming with Databases](09-prog.html)
-
-[Reference](../ref/04-sql.html)
 
 </div>
+
+<div>Please refer to the <a href="http://software-carpentry.org/v5/novice/sql/index.html">full Software Carpentry SQL lesson</a> for more examples and details about how to update a table, as well as manipulate databases from within Python.</div>

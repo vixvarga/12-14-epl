@@ -6,227 +6,349 @@ root: ../..
 ## Sorting and Removing Duplicates
 
 
-<div class="objectives" markdown="1">
-#### Objectives
-
-*   Write queries that display results in a particular order.
-*   Write queries that eliminate duplicate values from data.
+<div class="objectives">
+<h4 id="objectives">Objectives</h4>
+<ul>
+<li>Write queries that display results in a particular order.</li>
+<li>Write queries that eliminate duplicate values from data.</li>
+</ul>
 </div>
 
 
-Data is often redundant,
-so queries often return redundant information.
-For example,
-if we select the quantitites that have been measured
-from the `survey` table,
-we get this:
+<div>
+<p>Data is often redundant, so queries often return redundant information. For example, say we were interested in listing all the publishers that are represented in our catalogue. If we select the <code>Publisher</code> from the <code>Works</code> table, we get this:</p>
+</div>
 
 
-<pre class="in"><code>%load_ext sqlitemagic</code></pre>
+<div class="in">
+<pre>%load_ext sqlitemagic</pre>
+</div>
 
 
-<pre class="in"><code>%%sqlite survey.db
-select quant from Survey;</code></pre>
+<div class="in">
+<pre>%%sqlite swclib.db
+SELECT Publisher from Works;</pre>
+</div>
 
-<div class="out"><table>
-<tr><td>rad</td></tr>
-<tr><td>sal</td></tr>
-<tr><td>rad</td></tr>
-<tr><td>sal</td></tr>
-<tr><td>rad</td></tr>
-<tr><td>sal</td></tr>
-<tr><td>temp</td></tr>
-<tr><td>rad</td></tr>
-<tr><td>sal</td></tr>
-<tr><td>temp</td></tr>
-<tr><td>rad</td></tr>
-<tr><td>temp</td></tr>
-<tr><td>sal</td></tr>
-<tr><td>rad</td></tr>
-<tr><td>sal</td></tr>
-<tr><td>temp</td></tr>
-<tr><td>sal</td></tr>
-<tr><td>rad</td></tr>
-<tr><td>sal</td></tr>
-<tr><td>sal</td></tr>
-<tr><td>rad</td></tr>
-</table></div>
-
-
-We can eliminate the redundant output
-to make the result more readable
-by adding the `distinct` keyword
-to our query:
-
-
-<pre class="in"><code>%%sqlite survey.db
-select distinct quant from Survey;</code></pre>
-
-<div class="out"><table>
-<tr><td>rad</td></tr>
-<tr><td>sal</td></tr>
-<tr><td>temp</td></tr>
-</table></div>
-
-
-If we select more than one column&mdash;for example,
-both the survey site ID and the quantity measured&mdash;then
-the distinct pairs of values are returned:
-
-
-<pre class="in"><code>%%sqlite survey.db
-select distinct taken, quant from Survey;</code></pre>
-
-<div class="out"><table>
-<tr><td>619</td><td>rad</td></tr>
-<tr><td>619</td><td>sal</td></tr>
-<tr><td>622</td><td>rad</td></tr>
-<tr><td>622</td><td>sal</td></tr>
-<tr><td>734</td><td>rad</td></tr>
-<tr><td>734</td><td>sal</td></tr>
-<tr><td>734</td><td>temp</td></tr>
-<tr><td>735</td><td>rad</td></tr>
-<tr><td>735</td><td>sal</td></tr>
-<tr><td>735</td><td>temp</td></tr>
-<tr><td>751</td><td>rad</td></tr>
-<tr><td>751</td><td>temp</td></tr>
-<tr><td>751</td><td>sal</td></tr>
-<tr><td>752</td><td>rad</td></tr>
-<tr><td>752</td><td>sal</td></tr>
-<tr><td>752</td><td>temp</td></tr>
-<tr><td>837</td><td>rad</td></tr>
-<tr><td>837</td><td>sal</td></tr>
-<tr><td>844</td><td>rad</td></tr>
-</table></div>
+<div class="out">
+<pre><table>
+	<TR><TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>Wiley</TD>
+	</TR>
+	<TR><TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>Faber &amp; Faber</TD>
+	</TR>
+	<TR><TD>Belknap Press</TD>
+	</TR>
+	<TR><TD>McGraw-Hill</TD>
+	</TR>
+	<TR><TD>Wiley</TD>
+	</TR>
+	<TR><TD>Peachpit</TD>
+	</TR>
+	<TR><TD>South-Western</TD>
+	</TR>
+	<TR><TD>Wiley</TD>
+	</TR>
+	<TR><TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>Wiley</TD>
+	</TR>
+	<TR><TD>Apress</TD>
+	</TR>
+	<TR><TD>Wiley</TD>
+	</TR>
+	<TR><TD>Sams</TD>
+	</TR>
+	<TR><TD>Wiley</TD>
+	</TR>
+	<TR><TD>Wiley</TD>
+	</TR>
+	<TR><TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>O&#39;Reilly</TD>
+	</TR>
+</table></pre>
+</div>
 
 
-Notice in both cases that duplicates are removed
-even if they didn't appear to be adjacent in the database.
-Again,
-it's important to remember that rows aren't actually ordered:
-they're just displayed that way.
+<div>
+<p>We can eliminate the redundant output to make the result more readable by adding the <code>DISTINCT</code> keyword to our query:</p>
+</div>
 
 
-#### Challenges
+<div class="in">
+<pre>%%sqlite swclib.db
+SELECT DISTINCT Publisher from Works;</pre>
+</div>
 
-1.  Write a query that selects distinct dates from the `Site` table.
-
-
-As we mentioned earlier,
-database records are not stored in any particular order.
-This means that query results aren't necessarily sorted,
-and even if they are,
-we often want to sort them in a different way,
-e.g., by the name of the project instead of by the name of the scientist.
-We can do this in SQL by adding an `order by` clause to our query:
-
-
-<pre class="in"><code>%%sqlite survey.db
-select * from Person order by ident;</code></pre>
-
-<div class="out"><table>
-<tr><td>danforth</td><td>Frank</td><td>Danforth</td></tr>
-<tr><td>dyer</td><td>William</td><td>Dyer</td></tr>
-<tr><td>lake</td><td>Anderson</td><td>Lake</td></tr>
-<tr><td>pb</td><td>Frank</td><td>Pabodie</td></tr>
-<tr><td>roe</td><td>Valentina</td><td>Roerich</td></tr>
-</table></div>
-
-
-By default,
-results are sorted in ascending order
-(i.e.,
-from least to greatest).
-We can sort in the opposite order using `desc` (for "descending"):
+<div class="out">
+<pre><table>
+	<TR><TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>Wiley</TD>
+	</TR>
+	<TR><TD>Faber &amp; Faber</TD>
+	</TR>
+	<TR><TD>Belknap Press</TD>
+	</TR>
+	<TR><TD>McGraw-Hill</TD>
+	</TR>
+	<TR><TD>Peachpit</TD>
+	</TR>
+	<TR><TD>South-Western</TD>
+	</TR>
+	<TR><TD>Apress</TD>
+	</TR>
+	<TR><TD>Sams</TD>
+	</TR>
+</table></pre>
+</div>
 
 
-<pre class="in"><code>%%sqlite survey.db
-select * from person order by ident desc;</code></pre>
-
-<div class="out"><table>
-<tr><td>roe</td><td>Valentina</td><td>Roerich</td></tr>
-<tr><td>pb</td><td>Frank</td><td>Pabodie</td></tr>
-<tr><td>lake</td><td>Anderson</td><td>Lake</td></tr>
-<tr><td>dyer</td><td>William</td><td>Dyer</td></tr>
-<tr><td>danforth</td><td>Frank</td><td>Danforth</td></tr>
-</table></div>
+<div>
+<p>If we select more than one column—for example, both the place and publisher—then the distinct pairs of values are returned:</p>
+</div>
 
 
-(And if we want to make it clear that we're sorting in ascending order,
-we can use `asc` instead of `desc`.)
-  
-We can also sort on several fields at once.
-For example,
-this query sorts results first in ascending order by `taken`,
-and then in descending order by `person`
-within each group of equal `taken` values:
+<div class="in">
+<pre>%%sqlite swclib.db
+SELECT DISTINCT Place, Publisher FROM Works;</pre>
+</div>
+
+<div class="out">
+<pre><table>
+	<TR><TD>Sebastopol</TD>
+	<TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>Hoboken</TD>
+	<TD>Wiley</TD>
+	</TR>
+	<TR><TD>London</TD>
+	<TD>Faber &amp; Faber</TD>
+	</TR>
+	<TR><TD>Cambridge</TD>
+	<TD>Belknap Press</TD>
+	</TR>
+	<TR><TD>New York</TD>
+	<TD>McGraw-Hill</TD>
+	</TR>
+	<TR><TD>Indianapolis</TD>
+	<TD>Wiley</TD>
+	</TR>
+	<TR><TD>Berkeley</TD>
+	<TD>Peachpit</TD>
+	</TR>
+	<TR><TD>Mason</TD>
+	<TD>South-Western</TD>
+	</TR>
+	<TR><TD>Berkeley</TD>
+	<TD>Apress</TD>
+	</TR>
+	<TR><TD>Indianapolis</TD>
+	<TD>Sams</TD>
+	</TR>
+	<TR><TD>Cambridge</TD>
+	<TD>O&#39;Reilly</TD>
+	</TR>
+</table></pre>
+</div>
 
 
-<pre class="in"><code>%%sqlite survey.db
-select taken, person from Survey order by taken asc, person desc;</code></pre>
-
-<div class="out"><table>
-<tr><td>619</td><td>dyer</td></tr>
-<tr><td>619</td><td>dyer</td></tr>
-<tr><td>622</td><td>dyer</td></tr>
-<tr><td>622</td><td>dyer</td></tr>
-<tr><td>734</td><td>pb</td></tr>
-<tr><td>734</td><td>pb</td></tr>
-<tr><td>734</td><td>lake</td></tr>
-<tr><td>735</td><td>pb</td></tr>
-<tr><td>735</td><td>None</td></tr>
-<tr><td>735</td><td>None</td></tr>
-<tr><td>751</td><td>pb</td></tr>
-<tr><td>751</td><td>pb</td></tr>
-<tr><td>751</td><td>lake</td></tr>
-<tr><td>752</td><td>roe</td></tr>
-<tr><td>752</td><td>lake</td></tr>
-<tr><td>752</td><td>lake</td></tr>
-<tr><td>752</td><td>lake</td></tr>
-<tr><td>837</td><td>roe</td></tr>
-<tr><td>837</td><td>lake</td></tr>
-<tr><td>837</td><td>lake</td></tr>
-<tr><td>844</td><td>roe</td></tr>
-</table></div>
+<div>
+<p>Notice in both cases that duplicates are removed even if they didn't appear to be adjacent in the database. Again, it's important to remember that rows aren't actually ordered: they're just displayed that way.</p>
+</div>
 
 
-This is easier to understand if we also remove duplicates:
+<div>
+<h4 id="challenges">Challenge</h4>
+<ol style="list-style-type: decimal">
+<li>Write a query that displays all the distinct years in which items were purchased for the library. Hint, look at the <strong>Aquired</strong> column in the <code>Items</code> table.</li>
+</ol>
+</div>
 
 
-<pre class="in"><code>%%sqlite survey.db
-select distinct taken, person from Survey order by taken asc, person desc;</code></pre>
-
-<div class="out"><table>
-<tr><td>619</td><td>dyer</td></tr>
-<tr><td>622</td><td>dyer</td></tr>
-<tr><td>734</td><td>pb</td></tr>
-<tr><td>734</td><td>lake</td></tr>
-<tr><td>735</td><td>pb</td></tr>
-<tr><td>735</td><td>None</td></tr>
-<tr><td>751</td><td>pb</td></tr>
-<tr><td>751</td><td>lake</td></tr>
-<tr><td>752</td><td>roe</td></tr>
-<tr><td>752</td><td>lake</td></tr>
-<tr><td>837</td><td>roe</td></tr>
-<tr><td>837</td><td>lake</td></tr>
-<tr><td>844</td><td>roe</td></tr>
-</table></div>
+<div>
+<p>As we mentioned earlier, database records are not stored in any particular order. This means that query results aren't necessarily sorted, and even if they are, we often want to sort them in a different way, e.g., in alphabetical order instead of the order in which they were written into the database. We can do this in SQL by adding an <code>ORDER BY</code> clause to our query:</p>
+</div>
 
 
-#### Challenges
+<div class="in">
+<pre>%%sqlite swclib.db
+SELECT DISTINCT Publisher FROM Works ORDER BY Publisher;
+</pre>
+</div>
 
-1.  Write a query that returns the distinct dates in the `Visited` table.
+<div class="out">
+<pre><table>
+	<TR><TD>Apress</TD>
+	</TR>
+	<TR><TD>Belknap Press</TD>
+	</TR>
+	<TR><TD>Faber &amp; Faber</TD>
+	</TR>
+	<TR><TD>McGraw-Hill</TD>
+	</TR>
+	<TR><TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>Peachpit</TD>
+	</TR>
+	<TR><TD>Sams</TD>
+	</TR>
+	<TR><TD>South-Western</TD>
+	</TR>
+	<TR><TD>Wiley</TD>
+	</TR>
+</table></pre>
+</div>
 
-2.  Write a query that displays the full names of the scientists in the `Person` table, ordered by family name.
+
+<div>
+<p>By default, results are sorted in ascending order (i.e., from least to greatest or for A to Z). We can sort in the opposite order using <code>DESC</code> (for &quot;descending&quot;):</p>
+</div>
 
 
-<div class="keypoints" markdown="1">
-#### Key Points
+<div class="in">
+<pre>%%sqlite swclib.db
+SELECT DISTINCT Publisher FROM Works ORDER BY Publisher DESC;</pre>
+</div>
 
-*   The records in a database table are not intrinsically ordered:
-    if we want to display them in some order,
-    we must specify that explicitly.
-*   The values in a database are not guaranteed to be unique:
-    if we want to eliminate duplicates,
-    we must specify that explicitly as well.
+<div class="out">
+<pre><table>
+	<TR><TD>Wiley</TD>
+	</TR>
+	<TR><TD>South-Western</TD>
+	</TR>
+	<TR><TD>Sams</TD>
+	</TR>
+	<TR><TD>Peachpit</TD>
+	</TR>
+	<TR><TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>McGraw-Hill</TD>
+	</TR>
+	<TR><TD>Faber &amp; Faber</TD>
+	</TR>
+	<TR><TD>Belknap Press</TD>
+	</TR>
+	<TR><TD>Apress</TD>
+	</TR>
+</table></pre>
+</div>
+
+<div>
+<p>(And if we want to make it clear that we're sorting in ascending order, we can use <code>ASC</code> instead of <code>DESC</code>.)</p>
+<p>We can also sort on several fields at once. For example, this query sorts the <code>Works</code> table first by <code>Date</code> (in descending order), then by <code>Publisher</code> in ascending order:</p>
+</div>
+
+
+<div class="in">
+<pre>%%sqlite swclib.db
+SELECT Title, Date, Publisher FROM Works ORDER BY Date DESC, Publisher ASC;</pre>
+</div>
+
+<div class="out">
+<pre><table>
+	<TR><TD>Capital in the 21st century</TD>
+	<TD>2014</TD>
+	<TD>Belknap Press</TD>
+	</TR>
+	<TR><TD>Geek sublime</TD>
+	<TD>2014</TD>
+	<TD>Faber &amp; Faber</TD>
+	</TR>
+	<TR><TD>PHP &amp; MySQL</TD>
+	<TD>2013</TD>
+	<TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>Microsoft SQL server 2012</TD>
+	<TD>2013</TD>
+	<TD>Sams</TD>
+	</TR>
+	<TR><TD>SQL for dummies</TD>
+	<TD>2013</TD>
+	<TD>Wiley</TD>
+	</TR>
+	<TR><TD>Access 2013 all-in-one</TD>
+	<TD>2013</TD>
+	<TD>Wiley</TD>
+	</TR>
+	<TR><TD>Discovering SQL</TD>
+	<TD>2011</TD>
+	<TD>Wiley</TD>
+	</TR>
+	<TR><TD>SQL all-in-one</TD>
+	<TD>2011</TD>
+	<TD>Wiley</TD>
+	</TR>
+	<TR><TD>Using SQLite</TD>
+	<TD>2010</TD>
+	<TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>SQL for dummies</TD>
+	<TD>2010</TD>
+	<TD>Wiley</TD>
+	</TR>
+	<TR><TD>SQL</TD>
+	<TD>2009</TD>
+	<TD>McGraw-Hill</TD>
+	</TR>
+	<TR><TD>SQL in a nutshell</TD>
+	<TD>2009</TD>
+	<TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>Learning SQL</TD>
+	<TD>2009</TD>
+	<TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>Beginning SQL queries</TD>
+	<TD>2008</TD>
+	<TD>Apress</TD>
+	</TR>
+	<TR><TD>A guide to SQL</TD>
+	<TD>2008</TD>
+	<TD>South-Western</TD>
+	</TR>
+	<TR><TD>SQL bible</TD>
+	<TD>2008</TD>
+	<TD>Wiley</TD>
+	</TR>
+	<TR><TD>MySQL in a nutshell</TD>
+	<TD>2005</TD>
+	<TD>O&#39;Reilly</TD>
+	</TR>
+	<TR><TD>SQL</TD>
+	<TD>2005</TD>
+	<TD>Peachpit</TD>
+	</TR>
+	<TR><TD>Beginning SQL</TD>
+	<TD>2005</TD>
+	<TD>Wiley</TD>
+	</TR>
+	<TR><TD>SQL in a nutshell</TD>
+	<TD>2004</TD>
+	<TD>O&#39;Reilly</TD>
+	</TR>
+</table></pre>
+</div>
+
+
+<div>
+<h4 id="challenges">Challenge</h4>
+<ol style="list-style-type: decimal">
+<li><p>Write a query that displays the Personal and Family name of the authors in the <code>Authors</code> table, ordered by Family name.</p></li>
+</ol>
+</div>
+
+
+<div class="keypoints">
+<h4 id="key-points">Key Points</h4>
+<ul>
+<li>The records in a database table are not intrinsically ordered: if we want to display them in some order, we must specify that explicitly.</li>
+<li>The values in a database are not guaranteed to be unique: if we want to eliminate duplicates, we must specify that explicitly as well.</li>
+</ul>
 </div>

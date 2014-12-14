@@ -1,8 +1,3 @@
-# Time estimates for instructors
-
-* n = 1
-* median = 3 hours
-
 # Resources
 
 *   `gen-survey-database.sql`: re-generate survey database used in examples.

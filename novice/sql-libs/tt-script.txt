@@ -1,0 +1,294 @@
+
+## SQL Bootcamp script
+
+1 WHAT IS SQL
+
+Structured Query Language
+
+The language of databases. Not really a programming language, used to talk with databases. But more powerful than a simple search string. Can ACT on databases.
+
+Many dialects. Set of core commands (that we will learn today), while more complex functions e.g. concatenation, date manipulation depend on the implementation.
+
+Several implementations
+- MySQL
+- PostreSQL
+- MS SQL (Access)
+- SQLite
+
+
+
+2 GETTING STARTED
+Make sure everyone has a working sqlite bin, and has downloaded the example db
+
+Create new directory
+
+curl -L http://j.mp/swcTOlib -o 'swclib.db' OR download from browser
+sqlite3 swclib.db
+.schema
+
+
+Follow along https://timtomch.github.io/2014-07-15-toronto/novice/sql/
+
+
+
+3 SELECT 
+
+SELECT Family, Personal FROM Authors;
+
+
+.mode setting ?
+	- column
+	- html
+	
+
+
+(SQL is case-insensitive but good practice to capitalize commands)
+
+
+LIMIT statement
+
+
+Wildcard to select all columns:
+
+
+SELECT * FROM Authors LIMIT 5;
+
+
+
+
+
+-- CHALLENGE --
+
+Write a query that selects only titles from the Works table.
+
+	SELECT Title FROM Works;
+
+Write a query that selects the first 10 barcodes and status from the Items table
+
+	SELECT Barcode, Status FROM Items LIMIT 10;
+
+
+
+
+
+
+4 DISTINCT, ORDER BY
+
+SELECT Publisher from Works;
+
+to remove duplicates
+
+SELECT DISTINCT Publisher from Works;
+
+
+If we select a pair, the distinct pairs are returned
+SELECT DISTINCT Place, Publisher FROM Works;
+
+(two different O'Reilly)
+
+
+
+
+Order
+
+
+SELECT DISTINCT Publisher FROM Works ORDER BY Publisher;
+
+SELECT DISTINCT Publisher FROM Works ORDER BY Publisher DESC;
+
+SELECT DISTINCT Publisher FROM Works ORDER BY Publisher ASC;
+
+
+
+
+
+
+
+
+5 FILTERING - WHERE clauses & operators
+
+
+
+SELECT * FROM Works WHERE Publisher="Wiley";
+
+
+Not necessary to display the columns used for filtering
+
+SELECT Title FROM Works WHERE Publisher="Wiley";
+
+
+Boolean operators:
+SELECT * FROM Works WHERE (Publisher='Wiley') AND (Date>='2011');
+
+SELECT * FROM Works WHERE Publisher='Wiley' OR Publisher='O''Reilly';
+
+SELECT * FROM Works WHERE Publisher IN('Wiley','O''Reilly');
+
+
+LIKE
+
+SELECT Publisher FROM Works WHERE Publisher LIKE "%y";
+
+SELECT Publisher FROM Works WHERE Publisher LIKE "%il%";
+
+
+
+-- CHALLENGE
+
+Write a query that lists all books in the database that have the word "SQL" in their title and that have been published after 2010.
+
+	SELECT * FROM Works WHERE Title LIKE "%SQL%" AND Date>2010;
+
+Now order that list by Date, in descending order.
+
+	SELECT * FROM Works WHERE Title LIKE "%SQL%" AND Date>2010 ORDER BY Date DESC;
+
+
+
+
+6 OPERATIONS
+
+This actually works SELECT 1+2
+
+
+Say that we are interested in finding out the time it takes to read those books. We know from experimental research that it takes on average 45 seconds to read a page for books that have been published by Wiley.
+
+SELECT Title, 45*Pages FROM Works WHERE Publisher = "Wiley"
+
+gives us the amount in seconds. Now if we want hours, we divide by 3600.
+
+SELECT Title, 45*Pages/3600 FROM Works WHERE Publisher = "Wiley";
+
+
+-- CHALLENGE
+
+Our research further shows that it takes on average 38 seconds to read a page of a book that has been published by O'Reilly, but we have to add an extra 89 minutes for each book that is spend looking up references online. Write a query to compute the amount of hours required to read those titles.
+
+	SELECT Title, 38*Pages/3600+89/60 FROM Works WHERE Publisher = "O'Reilly";
+
+
+Don't these numbers appear too round to be true? What happens if I type?
+
+SELECT Title, 38.0*Pages/3600+89/60 FROM Works WHERE Publisher = "O'Reilly";
+
+
+
+
+Now what if we want to combine the result of our two last queries together in a single query. We use the UNION statement:
+
+
+SELECT Title, 45*Pages/3600 FROM Works WHERE Publisher = "Wiley" UNION SELECT Title, 38*Pages/3600+89/60 FROM Works WHERE Publisher = "O'Reilly";
+
+
+
+
+
+7 NULL
+
+OK let's list the page numbers again:
+
+SELECT Title, Pages from Works;
+
+Holes -> NULL values.
+
+NULL doesn't mean ZERO. It means "we don't know". Consequently, the result of an operation that involves NULL is NULL. What is 1 + NULL? We don't know. So the answer is NULL.
+
+Example
+SELECT Work_ID, Title, Pages FROM Works WHERE Pages<300
+
+SELECT Work_ID, Title, Pages FROM Works WHERE Pages>=300
+
+The titles with NULL pages don't show up in either of those lists.
+
+
+But if an operation involving a NULL produces NULL, what happens with comparison? If I want to isolate the null values, would this work?
+
+SELECT Title, Pages from Works WHERE Pages=NULL;
+
+
+Instead
+
+SELECT Title, Pages from Works WHERE Pages IS NULL;
+
+
+Inversely
+
+SELECT Title, Pages from Works WHERE Pages IS NOT NULL;
+
+
+
+
+
+
+
+
+
+8 AGGREGATION AND GROUP BY
+
+What if we want to aggregate the data from multiple rows? We use functions such as sum, avg, min
+
+SELECT sum(Pages) FROM Works WHERE Publisher="Wiley";
+
+
+SELECT min(Pages), max(Pages) FROM Works Where Publisher='O''Reilly';
+
+
+What if we want to do more complicated things
+
+SELECT Publisher, count(Title) FROM Works;
+
+This counts all the titles, returns only one line, arbitrary publisher. We need to tell SQL how it should group records.
+
+SELECT Publisher, count(Title) FROM Works GROUP BY Publisher
+
+
+
+
+-- CHALLENGES --
+
+Write a query that lists the amount of books published for each year in the catalog, and gives their average number of pages.
+
+
+
+
+9 JOIN ON
+
+We have a list of ITEMS that reference Work_IDs (foreign & primary keys). We should be able to combine this information?
+
+What happens if we just type
+
+SELECT * FROM Items JOIN Works;
+
+
+SELECT count(*) FROM Items JOIN Works;
+
+Why 800? Because every combination of 20 works and 40 items.
+
+
+We need to tell SQL how to join tables
+
+SELECT * FROM Items JOIN Works ON Items.Work_ID=Works.Work_ID;
+
+
+
+Note the doted notation
+
+SELECT Items.Barcode, Works.Title, Works.ISBN FROM Items JOIN Works ON Items.Work_ID=Works.Work_ID LIMIT 10;
+
+
+
+-- CHALLENGE --
+
+Authority file. The relationship between Works and Authors is coded into the table Works_Authors. Can you write a query that displays all the authors involved with SQL in a Nutshell 3rd edition, along with their role?
+
+
+SELECT Works_Authors.Role, Authors.Personal, Authors.Family 
+FROM   Works_Authors 
+JOIN   Authors 
+ON     Authors.Author_ID=Works_Authors.Author_ID 
+WHERE  Works_Authors.Work_ID=1;
+
+
+
+
+
