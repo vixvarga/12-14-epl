@@ -20,14 +20,14 @@ This lesson will demonstrate how to install the example database to be used in t
 
 1) Download <a href="http://files.software-carpentry.org/sqlite3.exe">SQLite3</a> into a directory of your choice
 
-2) Download the <a href="http://vixvarga.github.io/12-14-epl/novice/sql-libs/swclib.sql">SWC-libs.sql database file</a> into the same directory as above.
+2) Download the <a href="http://vixvarga.github.io/12-14-epl/novice/sql-libs/swclib.db">SWC-libs.db database file</a> into the same directory as above.
 
 
 ### Loading the database
 
 From the command line, navigate to the folder you have saved SQLite3 and the database file to. To open the database, type:
 
-<pre class="in"><code>sqlite3 swclib.sql</code></pre>
+<pre class="in"><code>sqlite3 swclib.db</code></pre>
 
 The command "sqlite3 swclib.db" opens the database itself and drops you into the database command line prompt. In SQLite a database is a flat file, which needs to be explicitly opened. SQLite is then started which is indicated by the change of the command line prompt to "sqlite", as shown in the following output:
 
