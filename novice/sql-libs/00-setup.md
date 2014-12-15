@@ -19,6 +19,7 @@ This lesson will demonstrate how to install the example database to be used in t
 
 
 1) Download <a href="http://files.software-carpentry.org/sqlite3.exe">SQLite3</a> into a directory of your choice
+
 2) Download the <a href="http://vixvarga.github.io/12-14-epl/novice/sql-libs/swclib.sql">SWC-libs.sql database file</a> into the same directory as above.
 
 
@@ -59,8 +60,11 @@ and the output of ".tables" would look like this:
 Authors   Items     Works   Works_Authors</code></pre>
 
 It is also a good idea to run the following two commands to improve the readability of the output we generate:
+
+
 <pre class="in"><code>sqlite&gt;.mode columns</code></pre>
 <pre class="in"><code>sqlite&gt;.headers on</code></pre>
+
 
 Now, you are done with the setup and you can proceed to the next lesson. You can conduct the following exercises in the current command line SQLite session. 
 
